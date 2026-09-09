@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada">
+  <div class="mx-auto flex max-w-xl flex-col items-center px-5 py-32 text-center sm:px-8">
+    <p class="text-6xl font-semibold text-arena">404</p>
+    <h1 class="mt-6 text-4xl">Esta página no existe</h1>
+    <p class="mt-4 text-marron/70">
+      Puede que el enlace esté viejo o que hayamos movido algo de lugar.
+    </p>
+    <a
+      href="/coleccion"
+      class="mt-10 rounded-full bg-marron px-7 py-3.5 font-medium text-beige transition-colors hover:bg-cacao"
+    >
+      Ver la colección
+    </a>
+  </div>
+</Base>

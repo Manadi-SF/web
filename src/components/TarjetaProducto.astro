@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Precio from './Precio.astro';
+
+interface Props {
+  producto: CollectionEntry<'productos'>;
+  /** La primera tarjeta de la grilla se carga sin diferir. */
+  prioridad?: boolean;
+}
+
+const { producto, prioridad = false } = Astro.props;
+const { nombre, resumen, fotos, precio } = producto.data;
+const portada = fotos[0]!;
+---
+
+<a
+  href={`/coleccion/${producto.id}`}
+  class="group aparece flex flex-col overflow-hidden rounded-2xl bg-crema transition-shadow duration-500 hover:shadow-xl hover:shadow-marron/10"
+>
+  <div class="aspect-4/5 overflow-hidden">
+    <Image
+      src={portada.src}
+      alt={portada.alt}
+      widths={[320, 480, 640]}
+      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+      loading={prioridad ? 'eager' : 'lazy'}
+      class="size-full object-cover transition-transform duration-700 ease-suave group-hover:scale-105"
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col gap-2 p-5">
+    <h3 class="text-xl">{nombre}</h3>
+    <p class="flex-1 text-sm/relaxed text-marron/70">{resumen}</p>
+    {precio && <Precio precio={precio} compacto />}
+  </div>
+</a>

@@ -1,0 +1,123 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Galeria from '../../components/Galeria.astro';
+import Precio from '../../components/Precio.astro';
+import Base from '../../layouts/Base.astro';
+import { enlaceWhatsapp } from '../../lib/sitio';
+
+export async function getStaticPaths() {
+  const productos = await getCollection('productos');
+  return productos.map((producto) => ({
+    params: { slug: producto.id },
+    props: { producto },
+  }));
+}
+
+interface Props {
+  producto: CollectionEntry<'productos'>;
+}
+
+const { producto } = Astro.props;
+const { nombre, resumen, fotos, precio, medidas, incluye, entrega, opciones } =
+  producto.data;
+const { Content } = await render(producto);
+---
+
+<Base titulo={nombre} descripcion={resumen} producto={nombre}>
+  <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+    <nav class="mb-10 text-sm text-marron/60">
+      <a href="/coleccion" class="transition-colors hover:text-marron">
+        &larr; Colección Manadi
+      </a>
+    </nav>
+
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <Galeria fotos={fotos} />
+
+      <div>
+        <h1 class="text-4xl sm:text-5xl">{nombre}</h1>
+
+        <div class="mt-6 max-w-prose space-y-4 text-marron/75 [&_p]:text-base/relaxed">
+          <Content />
+        </div>
+
+        {
+          precio && (
+            <div class="mt-10 rounded-2xl bg-crema p-6">
+              <Precio precio={precio} />
+            </div>
+          )
+        }
+
+        <a
+          href={enlaceWhatsapp(nombre)}
+          target="_blank"
+          rel="noopener"
+          class="mt-6 block rounded-full bg-marron px-7 py-4 text-center font-medium text-beige transition-colors hover:bg-cacao"
+        >
+          Consultar por WhatsApp
+        </a>
+
+        {
+          opciones.length > 0 && (
+            <section class="mt-12">
+              <h2 class="text-sm tracking-widest text-marron/50 uppercase">
+                Podés elegir
+              </h2>
+              <dl class="mt-5 space-y-5">
+                {opciones.map(({ titulo, valores, nota }) => (
+                  <div>
+                    <dt class="text-sm font-semibold">{titulo}</dt>
+                    <dd class="mt-1.5 flex flex-wrap gap-2">
+                      {valores.map((valor) => (
+                        <span class="rounded-full border border-marron/20 px-3.5 py-1.5 text-sm text-marron/80">
+                          {valor}
+                        </span>
+                      ))}
+                    </dd>
+                    {nota && <dd class="mt-2 text-sm text-marron/60">{nota}</dd>}
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )
+        }
+
+        {
+          incluye.length > 0 && (
+            <section class="mt-12">
+              <h2 class="text-sm tracking-widest text-marron/50 uppercase">Incluye</h2>
+              <ul class="mt-5 space-y-2.5">
+                {incluye.map((item) => (
+                  <li class="flex gap-3 text-sm/relaxed text-marron/80">
+                    <span class="mt-2 size-1.5 shrink-0 rounded-full bg-arena" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          (medidas || entrega) && (
+            <dl class="mt-12 space-y-4 border-t border-marron/10 pt-8 text-sm">
+              {medidas && (
+                <div class="flex gap-3">
+                  <dt class="w-28 shrink-0 text-marron/50">Medidas</dt>
+                  <dd>{medidas}</dd>
+                </div>
+              )}
+              {entrega && (
+                <div class="flex gap-3">
+                  <dt class="w-28 shrink-0 text-marron/50">Entrega</dt>
+                  <dd>{entrega}</dd>
+                </div>
+              )}
+            </dl>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</Base>

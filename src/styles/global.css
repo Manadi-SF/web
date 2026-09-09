@@ -1,0 +1,93 @@
+@import '@fontsource-variable/manrope';
+@import 'tailwindcss';
+
+/* Engravers Gothic BT es la fuente del logo. Solo se usa en titulos y en el
+   nombre de marca: es toda mayusculas y en textos largos se vuelve ilegible. */
+@font-face {
+  font-family: 'Engravers Gothic';
+  src: url('../assets/fuentes/engravers-gothic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* Los dos colores de la marca, tomados del logo. */
+  --color-beige: #e8e3dd;
+  --color-marron: #57432d;
+
+  /* Derivados, para tener profundidad sin ensuciar la paleta. */
+  --color-crema: #f4f1ec;
+  --color-hueso: #fbf9f6;
+  --color-cacao: #3a2c1e;
+  --color-arena: #b5a794;
+
+  --font-titulo: 'Engravers Gothic', 'Manrope Variable', sans-serif;
+  --font-cuerpo: 'Manrope Variable', system-ui, sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa el alto del nav fijo cuando se salta a un ancla. */
+    scroll-padding-top: 6rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-hueso);
+    color: var(--color-marron);
+    font-family: var(--font-cuerpo);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-titulo);
+    /* Engravers tiene un tracking muy justo en tamanos grandes. */
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-marron);
+    color: var(--color-beige);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-marron);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Aparicion al hacer scroll. Se degrada bien: si el navegador no soporta
+     animation-timeline, el contenido simplemente se ve siempre. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .aparece {
+        animation: aparecer linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+      }
+    }
+  }
+
+  @keyframes aparecer {
+    from {
+      opacity: 0;
+      transform: translateY(1.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

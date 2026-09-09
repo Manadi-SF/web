@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import taller from '../assets/productos/mesa-matera-plegada.jpg';
+import Base from '../layouts/Base.astro';
+import { CONTACTO, SITIO, enlaceWhatsapp } from '../lib/sitio';
+---
+
+<Base
+  titulo="Quiénes somos"
+  descripcion="Somos Mauro y Nadia, y somos Manadi. Diseño, corte y grabado láser en Santa Fe."
+>
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+    <div class="grid gap-14 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
+      <div>
+        <h1 class="text-5xl sm:text-6xl">Quiénes somos</h1>
+
+        <div class="mt-10 max-w-prose space-y-6 text-lg/relaxed text-marron/80">
+          <p class="text-2xl/relaxed text-marron">
+            Somos Mauro y Nadia, y somos Manadi.
+          </p>
+          <p>
+            Manadi nació de la idea de crear algo propio, combinando nuestras
+            habilidades, nuestra creatividad y, sobre todo, las ganas de
+            construir un proyecto que crezca con nosotros.
+          </p>
+          <p>
+            Trabajamos con diseño, corte y grabado láser sobre MDF, acrílico y
+            ecocuero, creando productos pensados para distintos usos y
+            necesidades: desde accesorios para juegos de cartas y productos
+            personalizados, hasta artículos para el hogar, la organización y el
+            mundo educativo.
+          </p>
+          <p>
+            Detrás de cada producto hay mucho más que una máquina: hay diseño,
+            pruebas, ajustes, horas de trabajo y una búsqueda constante por
+            hacer las cosas mejor.
+          </p>
+          <p>
+            Nos gusta encontrar soluciones, transformar una idea en un diseño y
+            convertir ese diseño en un objeto real. Por eso, en Manadi no
+            buscamos simplemente fabricar productos: buscamos crear cosas que
+            tengan sentido para quien las elige.
+          </p>
+          <p>
+            Hoy seguimos creciendo, incorporando nuevas herramientas,
+            desarrollando nuevos productos y aprendiendo en el camino, con una
+            idea muy clara: hacer de Manadi un proyecto que nos represente y
+            que, con el tiempo, se convierta en algo cada vez más grande.
+          </p>
+        </div>
+      </div>
+
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <Image
+          src={taller}
+          alt="Mesa matera plegada, lista para transportar"
+          widths={[480, 768]}
+          sizes="(min-width: 1024px) 40vw, 92vw"
+          class="aspect-4/5 w-full rounded-2xl object-cover"
+        />
+
+        <dl class="mt-8 space-y-4 text-sm">
+          <div class="flex gap-3">
+            <dt class="w-24 shrink-0 text-marron/50">Dónde</dt>
+            <dd>{SITIO.ciudad}</dd>
+          </div>
+          <div class="flex gap-3">
+            <dt class="w-24 shrink-0 text-marron/50">Envíos</dt>
+            <dd>A todo el país</dd>
+          </div>
+          <div class="flex gap-3">
+            <dt class="w-24 shrink-0 text-marron/50">WhatsApp</dt>
+            <dd>
+              <a
+                href={enlaceWhatsapp()}
+                target="_blank"
+                rel="noopener"
+                class="underline decoration-marron/30 underline-offset-4 transition-colors hover:decoration-marron"
+              >
+                {CONTACTO.whatsappVisible}
+              </a>
+            </dd>
+          </div>
+          <div class="flex gap-3">
+            <dt class="w-24 shrink-0 text-marron/50">Instagram</dt>
+            <dd>
+              <a
+                href={`https://www.instagram.com/${CONTACTO.instagram}/`}
+                target="_blank"
+                rel="noopener"
+                class="underline decoration-marron/30 underline-offset-4 transition-colors hover:decoration-marron"
+              >
+                @{CONTACTO.instagram}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,84 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import BotonWhatsapp from '../components/BotonWhatsapp.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import { CONTACTO, SITIO } from '../lib/sitio';
+import '../styles/global.css';
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+  /** Producto desde el que se consulta, para el boton de WhatsApp. */
+  producto?: string;
+  /** Imagen para cuando se comparte el enlace en redes. */
+  imagen?: string;
+}
+
+const {
+  titulo,
+  descripcion = SITIO.descripcion,
+  producto,
+  imagen,
+} = Astro.props;
+
+const tituloCompleto =
+  titulo === SITIO.nombre ? `${SITIO.nombre} | ${SITIO.bajada}` : `${titulo} | ${SITIO.nombre}`;
+
+const canonica = new URL(Astro.url.pathname, Astro.site);
+const imagenSocial = new URL(imagen ?? '/og.png', Astro.site);
+
+/** Datos del negocio para que Google los muestre en los resultados. */
+const datosNegocio = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: SITIO.nombre,
+  description: SITIO.descripcion,
+  url: SITIO.url,
+  telephone: `+${CONTACTO.whatsapp}`,
+  email: CONTACTO.mail,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Santa Fe',
+    addressRegion: 'Santa Fe',
+    addressCountry: 'AR',
+  },
+  sameAs: [`https://www.instagram.com/${CONTACTO.instagram}/`],
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#57432d" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITIO.nombre} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={imagenSocial} />
+    <meta property="og:locale" content="es_AR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(datosNegocio)} />
+
+    <ClientRouter />
+  </head>
+
+  <body class="flex min-h-dvh flex-col">
+    <Nav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <BotonWhatsapp producto={producto} />
+  </body>
+</html>

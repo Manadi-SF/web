@@ -1,0 +1,58 @@
+---
+import Logo from './Logo.astro';
+import { CONTACTO, SITIO, enlaceWhatsapp } from '../lib/sitio';
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="mt-24 bg-marron text-beige">
+  <div class="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1fr_auto]">
+    <div class="max-w-sm">
+      <Logo class="h-14 w-auto text-beige" titulo={SITIO.nombre} />
+      <p class="mt-6 text-sm/relaxed text-beige/75">
+        {SITIO.descripcion}
+      </p>
+      <p class="mt-4 text-sm text-beige/60">{SITIO.ciudad}</p>
+    </div>
+
+    <div class="text-sm">
+      <h2 class="text-base tracking-widest text-beige/60">Contacto</h2>
+      <ul class="mt-5 space-y-3">
+        <li>
+          <a
+            href={enlaceWhatsapp()}
+            target="_blank"
+            rel="noopener"
+            class="underline decoration-beige/30 underline-offset-4 transition-colors hover:decoration-beige"
+          >
+            WhatsApp {CONTACTO.whatsappVisible}
+          </a>
+        </li>
+        <li>
+          <a
+            href={`https://www.instagram.com/${CONTACTO.instagram}/`}
+            target="_blank"
+            rel="noopener"
+            class="underline decoration-beige/30 underline-offset-4 transition-colors hover:decoration-beige"
+          >
+            Instagram @{CONTACTO.instagram}
+          </a>
+        </li>
+        <li>
+          <a
+            href={`mailto:${CONTACTO.mail}`}
+            class="underline decoration-beige/30 underline-offset-4 transition-colors hover:decoration-beige"
+          >
+            {CONTACTO.mail}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-beige/15">
+    <p class="mx-auto max-w-6xl px-5 py-6 text-xs text-beige/50 sm:px-8">
+      {anio} {SITIO.nombre} &mdash; {SITIO.bajada}
+    </p>
+  </div>
+</footer>

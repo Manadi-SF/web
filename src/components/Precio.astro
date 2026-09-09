@@ -1,0 +1,64 @@
+---
+/**
+ * Precio de un producto.
+ *
+ * Los montos van con la fuente de cuerpo y no con la del logo: los numeros de
+ * Engravers Gothic salen tan separados entre si que "$120.000" se lee cortado.
+ */
+import { pesos } from '../lib/sitio';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  precio: CollectionEntry<'productos'>['data']['precio'];
+  /** En la tarjeta de la grilla alcanza con el monto mas bajo. */
+  compacto?: boolean;
+}
+
+const { precio, compacto = false } = Astro.props;
+
+if (!precio) return Astro.redirect('/');
+
+const { opciones, cuotas, transferencia, sena } = precio;
+const varias = opciones.length > 1;
+const menor = Math.min(...opciones.map((o) => o.monto));
+---
+
+{
+  compacto ? (
+    <p class="text-lg">
+      {varias && <span class="text-sm text-marron/60">desde </span>}
+      <span class="font-semibold">{pesos(menor)}</span>
+    </p>
+  ) : (
+    <div class="space-y-4">
+      {varias ? (
+        <ul class="divide-y divide-marron/10">
+          {opciones.map(({ etiqueta, monto }) => (
+            <li class="flex items-baseline justify-between gap-6 py-2.5">
+              <span class="text-sm text-marron/75">{etiqueta}</span>
+              <span class="text-lg font-semibold whitespace-nowrap">{pesos(monto)}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="text-4xl font-semibold tracking-tight">{pesos(opciones[0]!.monto)}</p>
+      )}
+
+      <ul class="space-y-1.5 text-sm text-marron/75">
+        {cuotas && <li>Hasta {cuotas} cuotas sin interés.</li>}
+        {transferencia && (
+          <li>
+            Por transferencia, <strong class="font-semibold text-marron">{pesos(transferencia.monto)}</strong>{' '}
+            ({transferencia.descuento}% de descuento).
+          </li>
+        )}
+        {sena && (
+          <li>
+            Podés señar el {sena.porcentaje}% ({pesos(sena.monto)}) para que
+            empecemos el trabajo y abonar el resto al entregarlo.
+          </li>
+        )}
+      </ul>
+    </div>
+  )
+}

@@ -1,0 +1,113 @@
+---
+/**
+ * Galeria de fotos de producto.
+ *
+ * Es un carrusel con scroll-snap: en el celular se pasa con el dedo y en la
+ * computadora con las miniaturas. El scroll lo hace el navegador, asi que
+ * funciona igual sin JavaScript; el script solo agrega el salto suave al tocar
+ * una miniatura y marcar cual esta a la vista.
+ *
+ * Las fotos van con object-contain: hay tomas verticales y horizontales
+ * mezcladas, y recortarlas para que entren todas en el mismo marco dejaba
+ * productos cortados por la mitad. Preferimos verlos completos sobre el fondo.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  fotos: CollectionEntry<'productos'>['data']['fotos'];
+}
+
+const { fotos } = Astro.props;
+---
+
+<div class="galeria" data-galeria>
+  <div
+    class="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    data-carrusel
+  >
+    {
+      fotos.map((foto, i) => (
+        <Image
+          src={foto.src}
+          alt={foto.alt}
+          widths={[480, 768, 1024]}
+          sizes="(min-width: 1024px) 50vw, 92vw"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          class="aspect-4/5 w-full shrink-0 snap-center rounded-2xl bg-crema object-contain"
+          data-foto-indice={i}
+        />
+      ))
+    }
+  </div>
+
+  {
+    fotos.length > 1 && (
+      <ul class="mt-3 flex gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {fotos.map((foto, i) => (
+          <li class="shrink-0">
+            <button
+              type="button"
+              data-ir-a={i}
+              aria-label={`Ver foto ${i + 1}: ${foto.alt}`}
+              aria-current={i === 0 ? 'true' : undefined}
+              class="block size-18 overflow-hidden rounded-lg opacity-45 ring-marron transition-all duration-300 hover:opacity-80 aria-[current=true]:opacity-100 aria-[current=true]:ring-2"
+            >
+              <Image
+                src={foto.src}
+                alt=""
+                widths={[144]}
+                class="size-full object-cover"
+                loading="lazy"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</div>
+
+<script>
+  function activarGalerias() {
+    document.querySelectorAll<HTMLElement>('[data-galeria]').forEach((galeria) => {
+      const carrusel = galeria.querySelector<HTMLElement>('[data-carrusel]');
+      const botones = galeria.querySelectorAll<HTMLButtonElement>('[data-ir-a]');
+      if (!carrusel || botones.length === 0) return;
+
+      const fotos = carrusel.querySelectorAll<HTMLElement>('[data-foto-indice]');
+
+      botones.forEach((boton) => {
+        boton.addEventListener('click', () => {
+          const destino = fotos[Number(boton.dataset.irA)];
+          // 'nearest' en el eje vertical evita que la pagina salte al hacer
+          // scroll horizontal dentro del carrusel.
+          destino?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        });
+      });
+
+      // La miniatura de la foto visible queda marcada.
+      const observador = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((entrada) => {
+            if (!entrada.isIntersecting) return;
+            const indice = (entrada.target as HTMLElement).dataset.fotoIndice;
+            botones.forEach((boton) => {
+              // aria-current se quita en vez de ponerlo en "false": si no, los
+              // lectores de pantalla anuncian todas las miniaturas como actual.
+              if (boton.dataset.irA === indice) boton.setAttribute('aria-current', 'true');
+              else boton.removeAttribute('aria-current');
+            });
+          });
+        },
+        { root: carrusel, threshold: 0.6 },
+      );
+
+      fotos.forEach((foto) => observador.observe(foto));
+    });
+  }
+
+  activarGalerias();
+  // Las transiciones de Astro no recargan la pagina, hay que reenganchar.
+  document.addEventListener('astro:page-load', activarGalerias);
+</script>

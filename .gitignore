@@ -1,0 +1,21 @@
+# build
+dist/
+.astro/
+
+# dependencias
+node_modules/
+
+# entorno
+.env
+.env.production
+
+# sistema
+.DS_Store
+Thumbs.db
+
+# fotos originales sin procesar (pesan cientos de MB)
+fotos-originales/
+
+# python
+__pycache__/
+.venv/

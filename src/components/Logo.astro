@@ -1,0 +1,38 @@
+---
+/**
+ * Logo de Manadi como SVG en linea.
+ *
+ * Va en linea en vez de como <img> para que herede el color del texto: asi el
+ * mismo archivo sirve en marron sobre el fondo claro y en beige sobre el
+ * footer oscuro, sin tener que mantener dos versiones.
+ */
+import completo from '../assets/logo.svg?raw';
+import isotipo from '../assets/isotipo.svg?raw';
+
+interface Props {
+  class?: string;
+  /**
+   * 'completo' trae el isotipo con el nombre y la bajada. En tamanos chicos
+   * las letras se vuelven ilegibles, asi que ahi conviene 'isotipo'.
+   */
+  variante?: 'completo' | 'isotipo';
+  /** Texto alternativo. Si el logo es decorativo, dejarlo vacio. */
+  titulo?: string;
+}
+
+const { class: clase, variante = 'completo', titulo } = Astro.props;
+
+const svg = (variante === 'completo' ? completo : isotipo)
+  // El marron del archivo pasa a currentColor.
+  .replace(/#57432d/gi, 'currentColor')
+  // Las medidas fijas estorban: el tamano lo define la clase de Tailwind.
+  .replace(/\s(width|height)="[\d.]+"/g, '')
+  .replace(
+    '<svg',
+    `<svg class="${clase ?? ''}" ${
+      titulo ? `role="img" aria-label="${titulo}"` : 'aria-hidden="true"'
+    }`,
+  );
+---
+
+<Fragment set:html={svg} />
