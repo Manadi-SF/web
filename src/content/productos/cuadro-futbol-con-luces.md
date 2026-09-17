@@ -7,10 +7,7 @@ categoria: coleccion
 precio:
   opciones:
     - monto: 50000
-  sena:
-    monto: 25000
-    porcentaje: 50
-medidas: 25 x 30 cm aproximadamente
+medidas: 30 x 25 cm aproximadamente. Consultanos por otras medidas.
 incluye:
   - Luces LED
   - 3 pilas AA
@@ -24,8 +21,7 @@ fotos:
     alt: Escudo de Colón en madera, retroiluminado sobre una pared blanca
 ---
 
-El escudo va cortado y armado en capas, con las luces por detrás: prendido de
-noche queda un halo alrededor que se ve muy bien.
+Incluye luces LED detrás que, al encenderse, generan una luz alrededor del
+escudo y hacen que se destaque aún más.
 
-Podés dejar una seña del 50% para que empecemos el trabajo y abonar el resto
-cuando esté terminado.
+Un detalle único para decorar tu espacio y llevar tus colores siempre con vos.

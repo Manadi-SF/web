@@ -11,5 +11,9 @@ fotos:
     alt: Portallaves con la casa y los globos de la película Up
 ---
 
-Cortado en capas para que los globos queden por delante de la casa y se note
-la profundidad. Va colgado en la pared de la entrada.
+Inspirado en la icónica película de Up.
+
+Cada personaje tiene su propio lugar para las llaves y podés grabar el nombre
+de quien la usa. Ideal para colocar en la pared de la entrada y tener tus
+llaves siempre a mano, sumando además un detalle divertido y original a tu
+hogar.

@@ -11,10 +11,16 @@ precio:
   transferencia:
     monto: 90000
     descuento: 25
+medidas: 50 cm de diámetro una vez abierta
 incluye:
-  - Manta de 1,50 m x 1,50 m
-  - Dos posiciones para el mate y el termo
-  - Patas plegables para transportarla
+  - >-
+    Espacios especialmente diseñados para colocar el termo y el mate, con base
+    de ecocuero que ayuda a mantenerlos firmes y evitar vuelcos o derrames
+  - Correa de transporte regulable, para llevarla cómodamente como bolso
+  - Elástico para sujetar la manta y facilitar su transporte
+  - >-
+    Manta de tropical mecánico de 1,50 m x 1,50 m, de fácil lavado y resistente
+    a las manchas
 entrega: 5 días hábiles desde la compra
 opciones:
   - titulo: Color de mesa
@@ -47,8 +53,8 @@ fotos:
     alt: Diseño de grabado Tan argentino que duele
 ---
 
-Podés combinar el color de la mesa, el de la manta y el diseño del grabado
-como más te guste: la armás a tu gusto y no hay dos iguales.
+Para que la sientas única, podés combinar el color de la mesa, la manta y el
+diseño del grabado como más te guste.
 
-Se plega para llevarla a cualquier lado y la manta va incluida, así no tenés
-que andar juntando cosas antes de salir.
+Usala en la cama, en el parque, en el sillón o donde quieras. Incluye correa
+para que te sea más fácil transportarla.

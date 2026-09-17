@@ -27,7 +27,8 @@ fotos:
     alt: Detalle del mapa con los cuadritos de fotos y los puntos cardinales
 ---
 
-Una forma distinta de guardar los viajes: marcás los lugares donde estuviste
-y les ponés la foto al lado. Con el tiempo la pared se llena de historias.
+Nuestra Argentina para guardar tus viajes: marcá los lugares que visitaste,
+sumá tus fotos y seguí agregando destinos.
 
-Ideal para decorar cualquier espacio y para ir sumando destinos.
+Una pieza única para decorar tu hogar y llenar la pared de recuerdos e
+historia.

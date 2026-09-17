@@ -1,15 +1,18 @@
 ---
 nombre: Huevera
-resumen: Dos pisos para 24 huevos, con manijas para llevarla a la mesa.
+resumen: Dos pisos para 30 huevos, con manijas para llevarla a la mesa.
 orden: 5
 categoria: coleccion
 precio:
   opciones:
     - monto: 35000
 incluye:
-  - Dos pisos con capacidad para 24 huevos
+  - Dos pisos con capacidad para 30 huevos
   - Manijas a los costados para levantarla
   - Gallina grabada en los laterales
+  - >-
+    Realizada en Fibroplus blanco: una superficie lisa, resistente y fácil de
+    limpiar, sin pintura que pueda descascararse con el uso
 fotos:
   - src: ../../assets/productos/huevera-1.jpg
     alt: Huevera blanca de dos pisos apoyada en una mesa de madera
@@ -21,5 +24,9 @@ fotos:
     alt: Detalle de los dos pisos de la huevera
 ---
 
-Los huevos quedan a la vista y ordenados, sin la caja de cartón dando vueltas
-en la heladera. Entran dos docenas y se puede levantar de las manijas.
+Una forma práctica y prolija de tener tus huevos siempre ordenados y a mano.
+Está realizada en fibroplus blanco y cuenta con dos pisos, con capacidad para
+30 huevos. Ideal para organizar tu cocina.
+
+¿Necesitás más capacidad? Consultanos por opciones con más pisos para guardar
+más huevos.
