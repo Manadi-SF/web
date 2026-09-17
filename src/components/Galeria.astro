@@ -3,9 +3,13 @@
  * Galeria de fotos de producto.
  *
  * Es un carrusel con scroll-snap: en el celular se pasa con el dedo y en la
- * computadora con las miniaturas. El scroll lo hace el navegador, asi que
- * funciona igual sin JavaScript; el script solo agrega el salto suave al tocar
- * una miniatura y marcar cual esta a la vista.
+ * computadora con las flechas o las miniaturas. El scroll lo hace el navegador,
+ * asi que funciona igual sin JavaScript; el script solo agrega el salto suave
+ * al tocar una miniatura, marca cual esta a la vista y maneja las flechas.
+ *
+ * Las flechas nacen con el atributo hidden y las muestra el script: sin
+ * JavaScript no hacen nada, y un boton que no responde confunde mas que no
+ * tenerlo.
  *
  * Las fotos van con object-contain: hay tomas verticales y horizontales
  * mezcladas, y recortarlas para que entren todas en el mismo marco dejaba
@@ -19,51 +23,147 @@ interface Props {
 }
 
 const { fotos } = Astro.props;
+
+/** Flecha redonda sobre la foto. Las dos comparten estilo y solo giran. */
+const claseFlecha =
+  'absolute top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-hueso/90 text-marron shadow-md ring-1 ring-marron/10 backdrop-blur-sm transition duration-300 hover:bg-hueso disabled:pointer-events-none disabled:opacity-0 sm:size-11';
+
+/** Flecha chica al costado de la tira de miniaturas. */
+const claseFlechaTira =
+  'grid size-8 shrink-0 place-items-center rounded-full text-marron transition duration-300 hover:bg-crema disabled:opacity-25 disabled:hover:bg-transparent';
 ---
 
 <div class="galeria" data-galeria>
-  <div
-    class="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    data-carrusel
-  >
+  <div class="relative">
+    <div
+      class="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      data-carrusel
+    >
+      {
+        fotos.map((foto, i) => (
+          <Image
+            src={foto.src}
+            alt={foto.alt}
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 1024px) 50vw, 92vw"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            class="aspect-4/5 w-full shrink-0 snap-center rounded-2xl bg-crema object-contain"
+            data-foto-indice={i}
+          />
+        ))
+      }
+    </div>
+
     {
-      fotos.map((foto, i) => (
-        <Image
-          src={foto.src}
-          alt={foto.alt}
-          widths={[480, 768, 1024]}
-          sizes="(min-width: 1024px) 50vw, 92vw"
-          loading={i === 0 ? 'eager' : 'lazy'}
-          class="aspect-4/5 w-full shrink-0 snap-center rounded-2xl bg-crema object-contain"
-          data-foto-indice={i}
-        />
-      ))
+      fotos.length > 1 && (
+        <>
+          {/* Arranca apagada porque siempre se empieza en la primera foto: si
+              esperamos al observador, la flecha aparece y se desvanece sola. */}
+          <button
+            type="button"
+            hidden
+            disabled
+            data-flecha="anterior"
+            aria-label="Foto anterior"
+            class={`${claseFlecha} left-2 sm:left-3`}
+          >
+            <svg viewBox="0 0 24 24" fill="none" class="size-5" aria-hidden="true">
+              <path
+                d="M15 5 8 12l7 7"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            hidden
+            data-flecha="siguiente"
+            aria-label="Foto siguiente"
+            class={`${claseFlecha} right-2 sm:right-3`}
+          >
+            <svg viewBox="0 0 24 24" fill="none" class="size-5" aria-hidden="true">
+              <path
+                d="m9 5 7 7-7 7"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </>
+      )
     }
   </div>
 
   {
     fotos.length > 1 && (
-      <ul class="mt-3 flex gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {fotos.map((foto, i) => (
-          <li class="shrink-0">
-            <button
-              type="button"
-              data-ir-a={i}
-              aria-label={`Ver foto ${i + 1}: ${foto.alt}`}
-              aria-current={i === 0 ? 'true' : undefined}
-              class="block size-18 overflow-hidden rounded-lg opacity-45 ring-marron transition-all duration-300 hover:opacity-80 aria-[current=true]:opacity-100 aria-[current=true]:ring-2"
-            >
-              <Image
-                src={foto.src}
-                alt=""
-                widths={[144]}
-                class="size-full object-cover"
-                loading="lazy"
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div class="mt-3 flex items-center gap-1.5">
+        <button
+          type="button"
+          hidden
+          data-flecha-tira="anterior"
+          aria-label="Ver miniaturas anteriores"
+          class={claseFlechaTira}
+        >
+          <svg viewBox="0 0 24 24" fill="none" class="size-4" aria-hidden="true">
+            <path
+              d="M15 5 8 12l7 7"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+
+        <ul
+          class="flex gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          data-tira
+        >
+          {fotos.map((foto, i) => (
+            <li class="shrink-0">
+              <button
+                type="button"
+                data-ir-a={i}
+                aria-label={`Ver foto ${i + 1}: ${foto.alt}`}
+                aria-current={i === 0 ? 'true' : undefined}
+                class="block size-18 overflow-hidden rounded-lg opacity-45 ring-marron transition-all duration-300 hover:opacity-80 aria-[current=true]:opacity-100 aria-[current=true]:ring-2"
+              >
+                <Image
+                  src={foto.src}
+                  alt=""
+                  widths={[144]}
+                  class="size-full object-cover"
+                  loading="lazy"
+                />
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          type="button"
+          hidden
+          data-flecha-tira="siguiente"
+          aria-label="Ver miniaturas siguientes"
+          class={claseFlechaTira}
+        >
+          <svg viewBox="0 0 24 24" fill="none" class="size-4" aria-hidden="true">
+            <path
+              d="m9 5 7 7-7 7"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
     )
   }
 </div>
@@ -77,14 +177,29 @@ const { fotos } = Astro.props;
 
       const fotos = carrusel.querySelectorAll<HTMLElement>('[data-foto-indice]');
 
+      const irAFoto = (indice: number) => {
+        const destino = fotos[Math.max(0, Math.min(indice, fotos.length - 1))];
+        // 'nearest' en el eje vertical evita que la pagina salte al hacer
+        // scroll horizontal dentro del carrusel.
+        destino?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      };
+
       botones.forEach((boton) => {
-        boton.addEventListener('click', () => {
-          const destino = fotos[Number(boton.dataset.irA)];
-          // 'nearest' en el eje vertical evita que la pagina salte al hacer
-          // scroll horizontal dentro del carrusel.
-          destino?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        });
+        boton.addEventListener('click', () => irAFoto(Number(boton.dataset.irA)));
       });
+
+      // Flechas sobre la foto. Se apagan en los extremos en vez de dar la
+      // vuelta: con scroll-snap el salto del final al principio se ve brusco.
+      const anterior = galeria.querySelector<HTMLButtonElement>('[data-flecha="anterior"]');
+      const siguiente = galeria.querySelector<HTMLButtonElement>('[data-flecha="siguiente"]');
+      let actual = 0;
+
+      if (anterior && siguiente) {
+        anterior.hidden = false;
+        siguiente.hidden = false;
+        anterior.addEventListener('click', () => irAFoto(actual - 1));
+        siguiente.addEventListener('click', () => irAFoto(actual + 1));
+      }
 
       // La miniatura de la foto visible queda marcada.
       const observador = new IntersectionObserver(
@@ -92,6 +207,13 @@ const { fotos } = Astro.props;
           entradas.forEach((entrada) => {
             if (!entrada.isIntersecting) return;
             const indice = (entrada.target as HTMLElement).dataset.fotoIndice;
+            actual = Number(indice);
+
+            if (anterior && siguiente) {
+              anterior.disabled = actual === 0;
+              siguiente.disabled = actual === fotos.length - 1;
+            }
+
             botones.forEach((boton) => {
               // aria-current se quita en vez de ponerlo en "false": si no, los
               // lectores de pantalla anuncian todas las miniaturas como actual.
@@ -104,7 +226,42 @@ const { fotos } = Astro.props;
       );
 
       fotos.forEach((foto) => observador.observe(foto));
+
+      activarTira(galeria);
     });
+  }
+
+  /**
+   * Flechas de la tira de miniaturas. Solo aparecen si la tira no entra
+   * completa: con tres o cuatro fotos en una pantalla ancha no hacen falta.
+   */
+  function activarTira(galeria: HTMLElement) {
+    const tira = galeria.querySelector<HTMLElement>('[data-tira]');
+    const anterior = galeria.querySelector<HTMLButtonElement>('[data-flecha-tira="anterior"]');
+    const siguiente = galeria.querySelector<HTMLButtonElement>('[data-flecha-tira="siguiente"]');
+    if (!tira || !anterior || !siguiente) return;
+
+    const actualizar = () => {
+      // El +1 absorbe los redondeos a medio pixel de los navegadores.
+      const desborda = tira.scrollWidth > tira.clientWidth + 1;
+      anterior.hidden = !desborda;
+      siguiente.hidden = !desborda;
+      if (!desborda) return;
+
+      anterior.disabled = tira.scrollLeft <= 0;
+      siguiente.disabled = Math.ceil(tira.scrollLeft + tira.clientWidth) >= tira.scrollWidth;
+    };
+
+    const correr = (sentido: number) => {
+      tira.scrollBy({ left: sentido * tira.clientWidth * 0.8, behavior: 'smooth' });
+    };
+
+    anterior.addEventListener('click', () => correr(-1));
+    siguiente.addEventListener('click', () => correr(1));
+    tira.addEventListener('scroll', actualizar, { passive: true });
+    new ResizeObserver(actualizar).observe(tira);
+
+    actualizar();
   }
 
   activarGalerias();
