@@ -24,6 +24,8 @@ from PIL import Image, ImageOps
 RAIZ = Path(__file__).resolve().parent.parent
 ORIGINALES = RAIZ / "fotos-originales"
 DESTINO = RAIZ / "src" / "assets" / "productos"
+# Fotos que no son de producto: la del equipo, ejemplos, y lo que venga.
+DESTINO_SITIO = RAIZ / "src" / "assets" / "sitio"
 LOGOS = RAIZ / "src" / "assets"
 MARCA = RAIZ / "marca"
 
@@ -80,11 +82,23 @@ FOTOS_CHAT: dict[str, str] = {
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_image-92e81f3b-0a70-4759-b39c-a013d87b9477.png": "cuadro-futbol-colon",
 }
 
+# Fotos del sitio que no son de producto. Van a src/assets/sitio/.
+FOTOS_SITIO: dict[str, str] = {
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_FOTO_-_QUIENES_SOMOS-a3a24b4e-5813-492f-95c7-e4de6ba22070.jpg": "quienes-somos",
+}
+
+# Cada origen con su destino, que es lo que recorre main().
+ORIGENES = (
+    (CARPETA_DRIVE, FOTOS, DESTINO),
+    (CARPETA_CHAT, FOTOS_CHAT, DESTINO),
+    (CARPETA_CHAT, FOTOS_SITIO, DESTINO_SITIO),
+)
+
 
 def copiar_originales() -> None:
     """Guarda una copia local de los originales, fuera del control de versiones."""
     ORIGINALES.mkdir(parents=True, exist_ok=True)
-    for carpeta, mapa in ((CARPETA_DRIVE, FOTOS), (CARPETA_CHAT, FOTOS_CHAT)):
+    for carpeta, mapa, _ in ORIGENES:
         if not carpeta.exists():
             print(f"  aviso: no encuentro {carpeta}")
             continue
@@ -104,7 +118,7 @@ def abrir(ruta: Path) -> Image.Image:
     return Image.open(ruta)
 
 
-def procesar(origen: Path, nombre_final: str) -> str:
+def procesar(origen: Path, nombre_final: str, carpeta: Path = DESTINO) -> str:
     imagen = abrir(origen)
 
     # Las fotos de celular traen la orientacion en los metadatos EXIF: si no la
@@ -117,11 +131,12 @@ def procesar(origen: Path, nombre_final: str) -> str:
     if max(imagen.size) > LADO_MAXIMO:
         imagen.thumbnail((LADO_MAXIMO, LADO_MAXIMO), Image.LANCZOS)
 
+    carpeta.mkdir(parents=True, exist_ok=True)
     if tiene_transparencia:
-        destino = DESTINO / f"{nombre_final}.png"
+        destino = carpeta / f"{nombre_final}.png"
         imagen.save(destino, "PNG", optimize=True)
     else:
-        destino = DESTINO / f"{nombre_final}.jpg"
+        destino = carpeta / f"{nombre_final}.jpg"
         imagen.save(destino, "JPEG", quality=CALIDAD, optimize=True, progressive=True)
 
     kb = destino.stat().st_size / 1024
@@ -205,18 +220,21 @@ def generar_logo() -> None:
     )
     (LOGOS / "logo.svg").write_text(svg, encoding="utf-8")
 
-    generar_favicon(svg, pagina)
+    generar_isotipo(svg, pagina)
     generar_imagen_social(logo)
 
     documento.close()
     print(f"  logo.svg y logo.png ({logo.size[0]}x{logo.size[1]})")
 
 
-def generar_favicon(svg: str, pagina) -> None:
-    """Favicon con el isotipo solo.
+def generar_isotipo(svg: str, pagina) -> None:
+    """Isotipo solo, sin las letras, para el encabezado.
 
-    En 32 px el logo completo es una manchita ilegible, asi que usamos solo el
-    trazo con el destello del laser, que si se reconoce en chico.
+    En chico el logo completo es una manchita ilegible, asi que usamos solo el
+    trazo con el destello del laser, que si se reconoce.
+
+    Ojo: esto NO genera el favicon. El de public/ lleva fondo marron para que
+    se vea en la pestana del navegador, y se regenera con generar-iconos.mjs.
     """
     # Los dibujos del PDF son el isotipo; el unico que descartamos es el marco,
     # que ocupa la pagina entera.
@@ -246,10 +264,8 @@ def generar_favicon(svg: str, pagina) -> None:
         solo_isotipo,
         count=1,
     )
-    (RAIZ / "public" / "favicon.svg").write_text(solo_isotipo, encoding="utf-8")
-    # La misma pieza se usa en el encabezado, donde el logo completo no se lee.
     (LOGOS / "isotipo.svg").write_text(solo_isotipo, encoding="utf-8")
-    print("  favicon.svg e isotipo.svg")
+    print("  isotipo.svg")
 
 
 def generar_imagen_social(logo: Image.Image) -> None:
@@ -278,7 +294,7 @@ def main() -> int:
 
     print("Procesando fotos...")
     faltantes: list[str] = []
-    for carpeta, mapa in ((CARPETA_DRIVE, FOTOS), (CARPETA_CHAT, FOTOS_CHAT)):
+    for carpeta, mapa, destino in ORIGENES:
         for nombre, nombre_final in mapa.items():
             origen = carpeta / nombre
             if not origen.exists():
@@ -286,7 +302,7 @@ def main() -> int:
             if not origen.exists():
                 faltantes.append(nombre)
                 continue
-            print(f"  {procesar(origen, nombre_final)}")
+            print(f"  {procesar(origen, nombre_final, destino)}")
 
     print("Generando logo...")
     generar_logo()
