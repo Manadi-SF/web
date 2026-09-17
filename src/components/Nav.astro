@@ -23,7 +23,17 @@ const esActual = (href: string) =>
         variante="isotipo"
         class="h-7 w-auto transition-opacity group-hover:opacity-70"
       />
-      <span class="font-titulo text-xl leading-none tracking-[0.12em] transition-opacity group-hover:opacity-70 sm:text-2xl">
+      {/*
+        uppercase: Engravers Gothic convierte las minusculas en versalitas, asi
+        que "Manadi" sale con la M grande y el resto chico. La marca va toda del
+        mismo tamano.
+
+        Debajo de 390px no entra junto al menu, asi que ahi queda solo el
+        isotipo. El nombre igual lo anuncia el aria-label del enlace.
+      */}
+      <span
+        class="hidden font-titulo text-lg leading-none tracking-[0.1em] uppercase transition-opacity group-hover:opacity-70 min-[390px]:inline sm:text-2xl sm:tracking-[0.12em]"
+      >
         {SITIO.nombre}
       </span>
     </a>
