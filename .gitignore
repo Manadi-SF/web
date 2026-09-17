@@ -19,6 +19,9 @@ Thumbs.db
 # fotos originales sin procesar (pesan cientos de MB)
 fotos-originales/
 
+# material de trabajo que no va a la web (excel, word, notas de Mauro)
+Documentos/
+
 # Engravers Gothic BT es una fuente comercial: el .ttf instalable no se
 # redistribuye en el repo. El sitio usa el .woff2 de src/assets/fuentes/.
 marca/*.ttf
