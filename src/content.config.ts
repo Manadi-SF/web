@@ -36,6 +36,11 @@ const productos = defineCollection({
             .object({ monto: z.number(), descuento: z.number() })
             .optional(),
           sena: z.object({ monto: z.number(), porcentaje: z.number() }).optional(),
+          /**
+           * Aclaraciones sueltas que van debajo del precio: descuentos por
+           * cantidad, si el monto es por unidad, y cosas asi.
+           */
+          notas: z.array(z.string()).default([]),
         })
         .optional(),
 

@@ -18,7 +18,7 @@ const { precio, compacto = false } = Astro.props;
 
 if (!precio) return Astro.redirect('/');
 
-const { opciones, cuotas, transferencia, sena } = precio;
+const { opciones, cuotas, transferencia, sena, notas } = precio;
 const varias = opciones.length > 1;
 const menor = Math.min(...opciones.map((o) => o.monto));
 ---
@@ -58,6 +58,9 @@ const menor = Math.min(...opciones.map((o) => o.monto));
             empecemos el trabajo y abonar el resto al entregarlo.
           </li>
         )}
+        {notas.map((nota) => (
+          <li>{nota}</li>
+        ))}
       </ul>
     </div>
   )

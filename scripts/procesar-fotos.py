@@ -80,6 +80,7 @@ FOTOS: dict[str, str] = {
 FOTOS_CHAT: dict[str, str] = {
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_image-5f84b000-d1d9-488d-8c17-b6363ecd109b.png": "organizador-mesita-1",
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_image-92e81f3b-0a70-4759-b39c-a013d87b9477.png": "cuadro-futbol-colon",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_PRODUCTO_ETIQUETA_ECO_CUERO-b3684696-f7a8-4909-898a-8bf58a7c0a3f.jpg": "etiquetas-ecocuero-1",
 }
 
 # Fotos del sitio que no son de producto. Van a src/assets/sitio/.

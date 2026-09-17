@@ -1,14 +1,26 @@
 ---
+/**
+ * Ficha de producto, para cualquiera de las ramas del catalogo.
+ *
+ * La rama sale de la categoria del producto, asi que la misma plantilla sirve
+ * para /coleccion/mesa-matera y para /materiales/etiquetas-ecocuero sin
+ * duplicar nada. Los indices de cada rama son archivos estaticos y Astro les
+ * da prioridad sobre esta ruta dinamica.
+ */
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Galeria from '../../components/Galeria.astro';
 import Precio from '../../components/Precio.astro';
 import Base from '../../layouts/Base.astro';
-import { enlaceWhatsapp } from '../../lib/sitio';
+import { RAMAS, enlaceWhatsapp } from '../../lib/sitio';
 
 export async function getStaticPaths() {
   const productos = await getCollection('productos');
   return productos.map((producto) => ({
-    params: { slug: producto.id },
+    params: {
+      // La ruta de la rama trae la barra adelante; el parametro no la lleva.
+      rama: RAMAS[producto.data.categoria].ruta.slice(1),
+      slug: producto.id,
+    },
     props: { producto },
   }));
 }
@@ -20,14 +32,15 @@ interface Props {
 const { producto } = Astro.props;
 const { nombre, resumen, fotos, precio, medidas, incluye, entrega, opciones } =
   producto.data;
+const rama = RAMAS[producto.data.categoria];
 const { Content } = await render(producto);
 ---
 
 <Base titulo={nombre} descripcion={resumen} producto={nombre}>
   <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
     <nav class="mb-10 text-sm text-marron/60">
-      <a href="/coleccion" class="transition-colors hover:text-marron">
-        &larr; Colección Manadi
+      <a href={rama.ruta} class="transition-colors hover:text-marron">
+        &larr; {rama.titulo}
       </a>
     </nav>
 

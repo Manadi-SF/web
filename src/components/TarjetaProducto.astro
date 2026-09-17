@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { enlaceProducto } from '../lib/sitio';
 import Precio from './Precio.astro';
 
 interface Props {
@@ -10,12 +11,12 @@ interface Props {
 }
 
 const { producto, prioridad = false } = Astro.props;
-const { nombre, resumen, fotos, precio } = producto.data;
+const { nombre, resumen, fotos, precio, categoria } = producto.data;
 const portada = fotos[0]!;
 ---
 
 <a
-  href={`/coleccion/${producto.id}`}
+  href={enlaceProducto(categoria, producto.id)}
   class="group aparece flex flex-col overflow-hidden rounded-2xl bg-crema transition-shadow duration-500 hover:shadow-xl hover:shadow-marron/10"
 >
   <div class="aspect-4/5 overflow-hidden">
