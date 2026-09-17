@@ -33,7 +33,10 @@ const claseFlechaTira =
   'grid size-8 shrink-0 place-items-center rounded-full text-marron transition duration-300 hover:bg-crema disabled:opacity-25 disabled:hover:bg-transparent';
 ---
 
-<div class="galeria" data-galeria>
+{/* min-w-0: la galeria es un item de grid y, sin esto, no puede achicarse por
+    debajo del ancho de la tira de miniaturas (diez miniaturas son 810px). En
+    el celular eso desbordaba la pagina entera hacia la derecha. */}
+<div class="galeria min-w-0" data-galeria>
   <div class="relative">
     <div
       class="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
