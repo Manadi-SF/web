@@ -48,6 +48,8 @@ export const RAMAS = {
     titulo: 'Colección Manadi',
     /** Para el menu, donde el titulo completo no entra. */
     corto: 'Colección',
+    /** Una linea, para el desplegable del menu. */
+    resumen: 'Las piezas que diseñamos nosotros',
     meta:
       'Mesas materas, decoración para la pared, organizadores y más. ' +
       'Piezas diseñadas y cortadas con láser en Santa Fe.',
@@ -60,6 +62,7 @@ export const RAMAS = {
     ruta: '/materiales',
     titulo: 'Productos por material',
     corto: 'Por material',
+    resumen: 'Ecocuero, acrílico y MDF para tu marca',
     meta:
       'Etiquetas de ecocuero y piezas en acrílico y MDF, personalizadas con ' +
       'tu marca. Corte y grabado láser en Santa Fe.',
@@ -72,6 +75,7 @@ export const RAMAS = {
     ruta: '/personalizados',
     titulo: 'Personalizados',
     corto: 'Personalizados',
+    resumen: 'Contanos tu idea y la hacemos',
     meta:
       'Productos hechos a medida con corte y grabado láser en Santa Fe. ' +
       'Contanos tu idea y la diseñamos con vos.',

@@ -86,18 +86,29 @@ const claseEnlace =
             </svg>
           </summary>
 
+          {/*
+            right-0: el panel se abre hacia la derecha, alineado al borde del
+            boton, en vez de colgarse a la izquierda con el texto corrido por
+            el relleno. Fondo crema como las tarjetas, para que no se confunda
+            con la barra.
+          */}
           <ul
-            class="absolute left-0 z-50 mt-1 min-w-60 rounded-2xl border border-marron/10 bg-hueso p-2 shadow-xl shadow-marron/10"
+            class="absolute right-0 z-50 mt-2 w-72 rounded-2xl border border-marron/15 bg-crema p-1.5 shadow-xl shadow-marron/10"
           >
             {
-              ramas.map(({ ruta, titulo }) => (
+              ramas.map(({ ruta, titulo, resumen }) => (
                 <li>
                   <a
                     href={ruta}
                     aria-current={esActual(ruta) ? 'page' : undefined}
-                    class="block rounded-xl px-3 py-2.5 transition-colors hover:bg-crema aria-[current=page]:font-semibold"
+                    class="block rounded-2xl px-4 py-3 transition-colors hover:bg-hueso aria-[current=page]:bg-hueso"
                   >
-                    {titulo}
+                    <span class="block font-titulo text-base tracking-wide">
+                      {titulo}
+                    </span>
+                    <span class="mt-1 block text-xs/relaxed text-marron/55">
+                      {resumen}
+                    </span>
                   </a>
                 </li>
               ))
@@ -155,21 +166,26 @@ const claseEnlace =
       </summary>
 
       <div
-        class="absolute inset-x-0 top-full border-b border-marron/10 bg-hueso p-5 shadow-xl shadow-marron/10"
+        class="absolute inset-x-0 top-full border-b border-marron/10 bg-hueso px-5 py-5 shadow-xl shadow-marron/10"
       >
         <p class="text-xs tracking-widest text-marron/50 uppercase">
           Nuestros productos
         </p>
-        <ul class="mt-2 space-y-1">
+        <ul class="mt-3 space-y-1">
           {
-            ramas.map(({ ruta, titulo }) => (
+            ramas.map(({ ruta, titulo, resumen }) => (
               <li>
                 <a
                   href={ruta}
                   aria-current={esActual(ruta) ? 'page' : undefined}
-                  class="block rounded-xl py-2.5 transition-colors aria-[current=page]:font-semibold"
+                  class="block rounded-2xl px-4 py-3 transition-colors hover:bg-crema aria-[current=page]:bg-crema"
                 >
-                  {titulo}
+                  <span class="block font-titulo text-lg tracking-wide">
+                    {titulo}
+                  </span>
+                  <span class="mt-1 block text-sm/relaxed text-marron/55">
+                    {resumen}
+                  </span>
                 </a>
               </li>
             ))
@@ -183,7 +199,7 @@ const claseEnlace =
                 <a
                   href={href}
                   aria-current={esActual(href) ? 'page' : undefined}
-                  class="block rounded-xl py-2.5 transition-colors aria-[current=page]:font-semibold"
+                  class="block rounded-2xl px-4 py-3 transition-colors hover:bg-crema aria-[current=page]:bg-crema aria-[current=page]:font-semibold"
                 >
                   {texto}
                 </a>
