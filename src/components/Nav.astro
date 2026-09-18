@@ -4,8 +4,8 @@
  *
  * El catalogo tiene varias ramas, asi que van agrupadas bajo "Nuestros
  * productos" como estaba pensado en la nota original. Solo se listan las ramas
- * que tienen productos cargados: personalizados aparece solo el dia que se
- * cargue el primero.
+ * que tienen productos cargados. La galeria de trabajos realizados se suma
+ * siempre, porque no es una rama de fichas: es una pagina de fotos.
  *
  * Los dos desplegables son <details>, no divs con JavaScript: asi abren y
  * cierran aunque el script no llegue a cargar. El script solo agrega lo que el
@@ -13,18 +13,19 @@
  * cambiar de pagina.
  */
 import { getCollection } from 'astro:content';
-import { NAVEGACION, RAMAS, SITIO, enlaceWhatsapp, type Rama } from '../lib/sitio';
+import { NAVEGACION, RAMAS, SITIO, TRABAJOS, enlaceWhatsapp, type Rama } from '../lib/sitio';
 import Logo from './Logo.astro';
 
 const productos = await getCollection('productos');
 const ramas = (Object.keys(RAMAS) as Rama[])
   .filter((rama) => productos.some(({ data }) => data.categoria === rama))
   .map((rama) => RAMAS[rama]);
+const catalogo = [...ramas, TRABAJOS];
 
 const actual = Astro.url.pathname;
 const esActual = (href: string) =>
   actual === href || (href !== '/' && actual.startsWith(href));
-const enProductos = ramas.some(({ ruta }) => esActual(ruta));
+const enProductos = catalogo.some(({ ruta }) => esActual(ruta));
 
 const claseEnlace =
   'relative block py-2 transition-colors hover:text-cacao aria-[current=page]:font-semibold';
@@ -96,7 +97,7 @@ const claseEnlace =
             class="absolute right-0 z-50 mt-2 w-72 rounded-2xl border border-marron/15 bg-crema p-1.5 shadow-xl shadow-marron/10"
           >
             {
-              ramas.map(({ ruta, titulo, resumen }) => (
+              catalogo.map(({ ruta, titulo, resumen }) => (
                 <li>
                   <a
                     href={ruta}
@@ -173,7 +174,7 @@ const claseEnlace =
         </p>
         <ul class="mt-3 space-y-1">
           {
-            ramas.map(({ ruta, titulo, resumen }) => (
+            catalogo.map(({ ruta, titulo, resumen }) => (
               <li>
                 <a
                   href={ruta}

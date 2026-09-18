@@ -1,7 +1,7 @@
 ---
 nombre: Posavasos
 resumen: Sueltos o en juego de 6, con su porta posavasos para dejarlos a mano.
-orden: 6
+orden: 7
 categoria: coleccion
 precio:
   opciones:

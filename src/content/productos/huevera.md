@@ -1,7 +1,7 @@
 ---
 nombre: Huevera
 resumen: Dos pisos para 30 huevos, con manijas para llevarla a la mesa.
-orden: 5
+orden: 6
 categoria: coleccion
 precio:
   opciones:

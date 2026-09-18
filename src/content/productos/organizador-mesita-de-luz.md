@@ -1,7 +1,7 @@
 ---
 nombre: Organizador de mesita de luz
 resumen: Todo lo que dejás antes de dormir, en un solo lugar y con tu nombre.
-orden: 4
+orden: 5
 destacado: true
 categoria: coleccion
 precio:
@@ -20,6 +20,8 @@ opciones:
 fotos:
   - src: ../../assets/productos/organizador-mesita-1.jpg
     alt: Organizador de mesita de luz con celular, relojes, anteojos y auriculares
+  - src: ../../assets/productos/organizador-mesita-2.jpg
+    alt: Cama con mesitas a ambos lados, para elegir organizador derecho o izquierdo
 ---
 
 Pensado para no dejar todo desparramado en la mesita: el celular queda

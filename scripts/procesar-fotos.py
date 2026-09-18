@@ -26,6 +26,7 @@ ORIGINALES = RAIZ / "fotos-originales"
 DESTINO = RAIZ / "src" / "assets" / "productos"
 # Fotos que no son de producto: la del equipo, ejemplos, y lo que venga.
 DESTINO_SITIO = RAIZ / "src" / "assets" / "sitio"
+DESTINO_TRABAJOS = RAIZ / "src" / "assets" / "trabajos"
 LOGOS = RAIZ / "src" / "assets"
 MARCA = RAIZ / "marca"
 
@@ -81,6 +82,13 @@ FOTOS_CHAT: dict[str, str] = {
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_image-5f84b000-d1d9-488d-8c17-b6363ecd109b.png": "organizador-mesita-1",
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_image-92e81f3b-0a70-4759-b39c-a013d87b9477.png": "cuadro-futbol-colon",
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_PRODUCTO_ETIQUETA_ECO_CUERO-b3684696-f7a8-4909-898a-8bf58a7c0a3f.jpg": "etiquetas-ecocuero-1",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_FOTO_EJEMPLO_DERECHO_E_IZQUIERDO-5414e224-9ee7-4ad7-8e1b-89a014977f43.jpg": "organizador-mesita-2",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_WhatsApp_Image_2026-091-17_at_15.23.09-9e617ee6-43aa-47cc-a1f2-726e644a1c3b.jpg": "argentina-luces-1",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_WhatsApp_Image_2026-09-17_at_15.23.107-0dc51875-e3b2-41d2-b9ec-4c89a1082ffa.jpg": "argentina-luces-2",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_WhatsApp_Image_2026-09-17_at_15.23.07-7dfb8087-f59d-40fb-a306-dbc4a1fe9c58.jpg": "argentina-luces-3",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Copia_de_Llaveros_en_acrilico-efc6f55d-8105-41f8-8f42-a7a3b35e1aca.jpg": "llaveros-acrilico-1",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Copia_de_LLaveros_en_acrilico__2_-b6dc9b25-9452-46c9-83d7-6309ade92c85.jpg": "llaveros-acrilico-2",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Copia_de_LLaveros_en_acrilico-02c654fa-79f7-43c1-b9f5-edbf398f4dc5.jpg": "llaveros-acrilico-3",
 }
 
 # Fotos del sitio que no son de producto. Van a src/assets/sitio/.
@@ -88,11 +96,47 @@ FOTOS_SITIO: dict[str, str] = {
     "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_FOTO_-_QUIENES_SOMOS-a3a24b4e-5813-492f-95c7-e4de6ba22070.jpg": "quienes-somos",
 }
 
+# Galeria de encargos de clientes. Van a src/assets/trabajos/.
+FOTOS_TRABAJOS: dict[str, str] = {
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Cajas_de_t___2_-e0ee0d90-af8f-4113-b746-09dac87a749d.jpg": "cajas-te",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Caja_de_truco-208fdaa8-da88-4223-8ba3-f4cc104c204c.jpg": "caja-truco",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Adorno_para_arbol_de_navidad-ff62608d-0483-45fb-8379-5bd64684cb67.jpg": "adorno-navidad",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Anotadores-dd9ceb43-d268-46a4-a939-ee9c4089e885.jpg": "anotadores",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Enebrador_de_gato-2a76ce30-4426-49b1-a1a2-3904e8ccc6ab.jpg": "enhebrador-gato",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Enhebrador_de_manzana-49016628-b367-4446-ac6a-ce581b6f66e6.jpg": "enhebrador-manzana",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Centro_de_mesa_portaservilletas-9e2c841b-e6de-4326-bc6e-bc19347dbccc.jpg": "centros-mesa",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Cuadro_personalizado__2_-9aefb62e-9e3b-47e7-b08b-8b3cdf1050ac.jpg": "cuadro-perro",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Exhibidor__4_-bd46a343-1591-42a1-a582-c79726022b23.jpg": "exhibidor",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Fichero-e2b91d3a-35ea-47d7-91ae-120f3129c61c.jpg": "fichero",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Figuras_para_pintar-72b8412f-facd-42d2-943b-49836687c5c2.jpg": "figuras-pintar-1",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Figuras_para_pintar__2_-7fe05ab0-c139-49c7-aca0-9c628f8e1b3d.jpg": "figuras-pintar-2",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Medallas_en_MDF-3790cfaa-a41c-43a5-addc-c025f766a3d1.jpg": "medallas",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Organizador_de_escritorio-2be33ec6-0644-4bbe-95f7-75b450a383ce.jpg": "organizador-escritorio",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Memotest__2_-741bf70f-963f-409f-9b0f-0ea2a07c2f9c.jpg": "memotest",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Llaveros-5a60334a-035c-46ee-b19f-bef489878a9a.jpg": "llaveros-moto",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portacelulares-9731369d-2755-47df-8d5d-5876ba1f20bc.jpg": "portacelulares",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portallaves__2_-fb8998ee-c3f9-46bc-b5a3-75c08a225234.jpg": "portallaves-familia",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portacinturones_de_karate-0b580d07-11a0-4974-ada3-0f1a26fa0a25.jpg": "portacinturones",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Porta_sahumerio-3ede29cc-a5cd-40d9-9252-b61ca9d641eb.jpg": "porta-sahumerio",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portamedallas__2_-86e84b65-0100-4b99-a0e3-cd87b10eb71e.jpg": "portamedallas",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portallaves-fc9e2dec-8098-43c3-9fc8-bbf85c06b46a.jpg": "portallaves-boca",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portaretratos__2_-ce5dba35-4be2-4d76-a56a-10c541d2c390.jpg": "portaretratos",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Reglas_personalizadas-605908c7-950d-4aac-a9c0-d9f2af3195e9.jpg": "reglas",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Portasahumerios-5df9bf3e-f2ad-40d4-ba0b-d173a5d4448c.jpg": "portasahumerios",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Tablero_para_pendulo-d6a9116f-3c6c-4e71-a734-fa5b88e707f9.jpg": "tablero-pendulo",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Tapas_para_velas-0dd88f4f-0af4-4bab-aafa-16bf5e147d03.jpg": "tapas-velas",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Trofeo_de_bailarina-f19552ab-0d3e-49a7-a4b5-ec6d8e28d06d.jpg": "trofeo-bailarina",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Trabado-9432492e-3b0e-42e8-a91c-73b773c6098d.jpg": "trabado",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Rompecabezas-8242031f-478a-4d95-80d1-4ad9f7871c5a.jpg": "rompecabezas",
+    "c__Users_Windows_AppData_Roaming_Cursor_User_workspaceStorage_f571ca1cb5a139a1a9c648188f5037a0_images_Tateti-e7ee1d20-fe6c-4b43-8e4e-f5a7561961b7.jpg": "tateti",
+}
+
 # Cada origen con su destino, que es lo que recorre main().
 ORIGENES = (
     (CARPETA_DRIVE, FOTOS, DESTINO),
     (CARPETA_CHAT, FOTOS_CHAT, DESTINO),
     (CARPETA_CHAT, FOTOS_SITIO, DESTINO_SITIO),
+    (CARPETA_CHAT, FOTOS_TRABAJOS, DESTINO_TRABAJOS),
 )
 
 

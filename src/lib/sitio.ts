@@ -25,10 +25,17 @@ export const CONTACTO = {
  * tener que explicar qué vio, y del otro lado se sabe de qué producto viene
  * la consulta.
  */
-export function enlaceWhatsapp(producto?: string): string {
-  const mensaje = producto
-    ? `¡Hola Manadi! Me interesa ${producto}. ¿Me pasan más información?`
-    : '¡Hola Manadi! Quería hacerles una consulta.';
+export function enlaceWhatsapp(
+  producto?: string,
+  motivo: 'consulta' | 'stock' = 'consulta',
+): string {
+  let mensaje = '¡Hola Manadi! Quería hacerles una consulta.';
+
+  if (producto && motivo === 'stock') {
+    mensaje = `¡Hola Manadi! Quería consultar el stock de ${producto}.`;
+  } else if (producto) {
+    mensaje = `¡Hola Manadi! Me interesa ${producto}. ¿Me pasan más información?`;
+  }
 
   return `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(mensaje)}`;
 }
@@ -89,6 +96,22 @@ export type Rama = keyof typeof RAMAS;
 export function enlaceProducto(categoria: Rama, id: string): string {
   return `${RAMAS[categoria].ruta}/${id}`;
 }
+
+/**
+ * Galeria de encargos. No es una rama de productos (no tiene fichas ni
+ * precios): es una pagina de fotos que se suma al desplegable del catalogo.
+ */
+export const TRABAJOS = {
+  ruta: '/trabajos-realizados',
+  titulo: 'Trabajos realizados',
+  resumen: 'Personalizados de nuestros clientes',
+  meta:
+    'Encargos de corte y grabado láser que hicimos para otras personas y ' +
+    'marcas en Santa Fe.',
+  intro:
+    'Estos son algunos de los personalizados que hicimos para nuestros ' +
+    'clientes. Si tenés una idea, la diseñamos y la cortamos con vos.',
+} as const;
 
 export const NAVEGACION = [
   { texto: 'Quiénes somos', href: '/quienes-somos' },
