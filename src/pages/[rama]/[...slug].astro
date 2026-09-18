@@ -30,9 +30,10 @@ interface Props {
 }
 
 const { producto } = Astro.props;
-const { nombre, resumen, fotos, precio, medidas, incluye, entrega, opciones } =
+const { nombre, resumen, fotos, precio, medidas, incluye, entrega, opciones, categoria } =
   producto.data;
-const rama = RAMAS[producto.data.categoria];
+const rama = RAMAS[categoria];
+const esColeccion = categoria === 'coleccion';
 const { Content } = await render(producto);
 ---
 
@@ -112,33 +113,39 @@ const { Content } = await render(producto);
           )
         }
 
-        <dl class="mt-12 space-y-4 border-t border-marron/10 pt-8 text-sm">
-          {medidas && (
-            <div class="flex gap-3">
-              <dt class="w-28 shrink-0 text-marron/50">Medidas</dt>
-              <dd>{medidas}</dd>
-            </div>
-          )}
-          {entrega && (
-            <div class="flex gap-3">
-              <dt class="w-28 shrink-0 text-marron/50">Entrega</dt>
-              <dd>{entrega}</dd>
-            </div>
-          )}
-          <div class="flex gap-3">
-            <dt class="w-28 shrink-0 text-marron/50">Stock</dt>
-            <dd>
-              <a
-                href={enlaceWhatsapp(nombre, 'stock')}
-                target="_blank"
-                rel="noopener"
-                class="underline decoration-marron/30 underline-offset-4 transition-colors hover:decoration-marron"
-              >
-                Consultar por WhatsApp
-              </a>
-            </dd>
-          </div>
-        </dl>
+        {
+          (medidas || entrega || esColeccion) && (
+            <dl class="mt-12 space-y-4 border-t border-marron/10 pt-8 text-sm">
+              {medidas && (
+                <div class="flex gap-3">
+                  <dt class="w-28 shrink-0 text-marron/50">Medidas</dt>
+                  <dd>{medidas}</dd>
+                </div>
+              )}
+              {entrega && (
+                <div class="flex gap-3">
+                  <dt class="w-28 shrink-0 text-marron/50">Entrega</dt>
+                  <dd>{entrega}</dd>
+                </div>
+              )}
+              {esColeccion && (
+                <div class="flex gap-3">
+                  <dt class="w-24 shrink-0 text-marron/50 sm:w-28">Stock</dt>
+                  <dd class="min-w-0">
+                    <a
+                      href={enlaceWhatsapp(nombre, 'stock')}
+                      target="_blank"
+                      rel="noopener"
+                      class="underline decoration-marron/30 underline-offset-4 transition-colors hover:decoration-marron"
+                    >
+                      Consultar por WhatsApp
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          )
+        }
       </div>
     </div>
   </div>
